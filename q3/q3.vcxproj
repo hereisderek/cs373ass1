@@ -19,6 +19,9 @@
     <ClCompile Include="..\document\matrixops.cpp" />
     <ClCompile Include="..\document\q3.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="input.txt" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{F100CB57-D28E-4992-8800-FE9163B50CB6}</ProjectGuid>
     <RootNamespace>q3</RootNamespace>

@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="input1.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="..\document\matrixf.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -35,5 +32,8 @@
     <ClCompile Include="..\document\q2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="input.txt" />
   </ItemGroup>
 </Project>
