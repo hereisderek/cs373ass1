@@ -59,6 +59,7 @@ int main(int argumentCount, char **arguments)
   
     // TODO: Add your Height and Area logic here!
 	Matrixf crossResult = cross(a, b);
+	crossResult.printMatrix();
 	float area = length(crossResult);
 	float height = area / length(a);
     Matrixf solution = CreateSolutionMatrix(height, area);

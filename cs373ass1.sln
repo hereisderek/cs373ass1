@@ -3,12 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30324.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "document", "document", "{CD2DFA27-D599-4456-8D0E-11212D752563}"
-	ProjectSection(SolutionItems) = preProject
-		F:\data\study\current_study\compsci373\assignment\1\CS373-2014-Assignment1.pdf = F:\data\study\current_study\compsci373\assignment\1\CS373-2014-Assignment1.pdf
-		F:\data\study\current_study\compsci373\assignment\1\skeleton_code.7z = F:\data\study\current_study\compsci373\assignment\1\skeleton_code.7z
-	EndProjectSection
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "q2", "q2\q2.vcxproj", "{4CF85A12-6290-4D10-8512-FE85FEFAB280}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "q3", "q3\q3.vcxproj", "{F100CB57-D28E-4992-8800-FE9163B50CB6}"
@@ -16,6 +10,12 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "q4", "q4\q4.vcxproj", "{B4F6AA7D-17B4-4879-96ED-6AA1B5D79B66}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "q5", "q5\q5.vcxproj", "{3865437D-942F-4879-9EBA-14ED3AAE6CCD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "document", "document", "{2D1A2CE8-2326-47F7-B241-71A991DB759E}"
+	ProjectSection(SolutionItems) = preProject
+		document\CS373-2014-Assignment1.pdf = document\CS373-2014-Assignment1.pdf
+		document\skeleton_code.7z = document\skeleton_code.7z
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

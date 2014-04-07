@@ -11,8 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{4CF85A12-6290-4D10-8512-FE85FEFAB280}</ProjectGuid>
-    <RootNamespace>q2</RootNamespace>
+    <ProjectGuid>{73DC0BE3-3009-46AE-BC44-B04715018391}</ProjectGuid>
+    <RootNamespace>commonfiles</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -64,16 +64,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="matrixf.cpp" />
-    <ClCompile Include="matrixops.cpp" />
-    <ClCompile Include="q2.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="input1.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="matrixf.h" />
     <ClInclude Include="matrixops.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="matrixf.cpp" />
+    <ClCompile Include="matrixops.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

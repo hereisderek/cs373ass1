@@ -9,6 +9,7 @@ public:
 	// Constructors and Destructor
 	// Creates a matrix of size rows and cols with all values set to zero
 	Matrixf(unsigned int rows, unsigned int cols) ;
+	void Matrixf::printMatrix();
 	virtual ~Matrixf() ;
 
 	// copy and assign

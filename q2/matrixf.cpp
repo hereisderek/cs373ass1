@@ -1,6 +1,7 @@
 #include "matrixf.h"
 
 #include <iostream>
+using namespace std;
 
 Matrixf::Matrixf(unsigned int rows, unsigned int cols) {
 	rows_ = rows;
@@ -52,6 +53,17 @@ float Matrixf::get(unsigned int row, unsigned int col) const {
 #endif
 
 	return data_[row * cols_ + col];
+}
+
+void Matrixf::printMatrix(){
+	for (int row = 0; row<2; row++)
+	{
+		for (int column = 0; column<3; column++)
+		{
+			cout << data_[row * cols_ + column] << " ";
+		}
+		cout << endl;
+	}
 }
 
 void Matrixf::set(unsigned int row, unsigned int col, float val) {
