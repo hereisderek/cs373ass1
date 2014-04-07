@@ -36,7 +36,8 @@ Matrixf multiply(Matrixf const& mat, float scalar) {
 	for (unsigned int row = 0; row < mat.nrows(); ++row){
 		for (unsigned int col = 0; col < mat.ncols(); ++col){
 			//ret(row, col) *= scalar;
-			ret(row, col) = mat(row, col) * scalar;
+			//TODO: double check here
+			ret(row, col) = (mat(row, col) == 0 ? 0 : mat(row, col) * scalar);
 		}
 	}
 	return ret;
