@@ -64,16 +64,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="matrixf.cpp" />
-    <ClCompile Include="matrixops.cpp" />
-    <ClCompile Include="q2.cpp" />
-  </ItemGroup>
-  <ItemGroup>
     <Text Include="input1.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="matrixf.h" />
-    <ClInclude Include="matrixops.h" />
+    <ClInclude Include="..\document\matrixf.h" />
+    <ClInclude Include="..\document\matrixops.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\document\matrixf.cpp" />
+    <ClCompile Include="..\document\matrixops.cpp" />
+    <ClCompile Include="..\document\q2.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

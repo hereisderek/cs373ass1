@@ -15,21 +15,21 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="matrixf.h">
+    <ClInclude Include="..\document\matrixf.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="matrixops.h">
+    <ClInclude Include="..\document\matrixops.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="matrixf.cpp">
+    <ClCompile Include="..\document\matrixf.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="matrixops.cpp">
+    <ClCompile Include="..\document\matrixops.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="q5.cpp">
+    <ClCompile Include="..\document\q5.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -10,6 +10,15 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\document\matrixf.h" />
+    <ClInclude Include="..\document\matrixops.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\document\matrixf.cpp" />
+    <ClCompile Include="..\document\matrixops.cpp" />
+    <ClCompile Include="..\document\q3.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{F100CB57-D28E-4992-8800-FE9163B50CB6}</ProjectGuid>
     <RootNamespace>q3</RootNamespace>
@@ -63,15 +72,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="matrixf.cpp" />
-    <ClCompile Include="matrixops.cpp" />
-    <ClCompile Include="q3.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="matrixf.h" />
-    <ClInclude Include="matrixops.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
