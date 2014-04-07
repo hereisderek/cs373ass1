@@ -47,6 +47,7 @@ void WriteSolution(Matrixf & solution);
  * @param arguments The list of incomming arguments
  * @returns SUCCESS or FAILURE
  */
+
 int main(int argumentCount, char **arguments) 
 {
   try 
@@ -56,11 +57,13 @@ int main(int argumentCount, char **arguments)
     Matrixf matrix = ReadFile(arguments[1]);
     Matrixf a = GetMatrixRow(matrix, 0);
     Matrixf b = GetMatrixRow(matrix, 1);
+	//Matrixf myMatrix(2, 3), myMatrix2(3, 2);
+	//myMatrix(1, 1) = 1; myMatrix(1, 2) = 2; myMatrix(1, 3) = 3; myMatrix(2, 1) = 4; myMatrix(2, 2) = 5; myMatrix(2, 3) = 6;
+	//multiply(myMatrix, transpose(myMatrix)).printMatrix();
 
-	matrix.printMatrix();
     // TODO: Add your Height and Area logic here!
 	Matrixf crossResult = cross(a, b);
-	crossResult.printMatrix();
+	//crossResult.printMatrix();
 	float area = length(crossResult);
 	float height = area / length(a);
     Matrixf solution = CreateSolutionMatrix(height, area);

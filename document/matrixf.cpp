@@ -55,7 +55,7 @@ float Matrixf::get(unsigned int row, unsigned int col) const {
 	return data_[row * cols_ + col];
 }
 
-void Matrixf::printMatrix(){
+void Matrixf::printMatrix() const {
 	for (int row = 0; row<rows_; row++)
 	{
 		for (int column = 0; column<cols_; column++)
@@ -65,6 +65,7 @@ void Matrixf::printMatrix(){
 		}
 		cout << endl;
 	}
+	cout << endl;
 }
 
 void Matrixf::set(unsigned int row, unsigned int col, float val) {

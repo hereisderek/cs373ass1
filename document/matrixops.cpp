@@ -5,7 +5,7 @@
 #include <cmath>
 
 Matrixf multiply(Matrixf const& left, Matrixf const& right) {
-
+	//printf("left.ncols() != right.nrows(): " + (left.ncols() != right.nrows()));
 	// error check
 	if (left.ncols() != right.nrows()) {
 		throw std::runtime_error("Unable to multiply: matrix dimensions not agree.");
@@ -14,9 +14,14 @@ Matrixf multiply(Matrixf const& left, Matrixf const& right) {
 	/** implement matrix/vector multiplication ********************/
 
 	Matrixf ret(left.nrows(), right.ncols());
-	for (unsigned int row = 0; row < left.nrows(); row++){
-		for (unsigned int col = 0; col < left.ncols(); col++){
-			//ret(row, col) +=  
+	for (unsigned int row = 0; row < left.nrows(); ++row){
+		for (unsigned int col = 0; col < left.ncols(); ++col){
+			float sum = 0;
+			for (unsigned int inner = 0; inner < right.ncols(); ++inner){
+				//ret(row, col) += left(row, inner) * right(inner, col);
+				sum +=  left(row, inner) * right(inner, col);
+			}
+			ret(row, col) = sum;
 		}
 	}
 
@@ -65,8 +70,14 @@ Matrixf cross(Matrixf const& vec1, Matrixf const& vec2) {
 
 	/** implement cross product ***********************************/
 
-	Matrixf ret(1, 1);
+	Matrixf ret(3, 1);
+	ret(0, 0) = vec1(1, 0) * vec2(2, 0) - vec1(2, 0) * vec2(1, 0);
+	ret(1, 0) = vec1(2, 0) * vec2(0, 0) - vec1(0, 0) * vec2(2, 0);
+	ret(2, 0) = vec1(0, 0) * vec2(1, 0) - vec1(1, 0) * vec2(0, 0);
 
+	//vec1.printMatrix(); vec2.printMatrix();
+	//printf( "0%", (vec1(2, 1) * vec2(3, 1) - vec1(3, 1) * vec2(2, 1)));
+	//ret.printMatrix();
 	return ret;
 }
 
