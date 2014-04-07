@@ -11,6 +11,9 @@ Matrixf multiply(Matrixf const& left, Matrixf const& right) ;
 Matrixf multiply(Matrixf const& mat, float scalar) ;
 Matrixf multiply(float scalar, Matrixf const& mat) ;
 
+// Normalize a vector
+Matrixf normalize(Matrixf const& vector);
+
 // Finds the dot product of two vectors of the same length.
 float dot(Matrixf const& vec1, Matrixf const& vec2) ;
 
@@ -19,6 +22,7 @@ Matrixf cross(Matrixf const& vec1, Matrixf const& vec2) ;
 
 // Computes the sum of two matrices of the same size.
 Matrixf add(Matrixf const& mat1, Matrixf const& mat2) ;
+Matrixf subtract(Matrixf const& mat1, Matrixf const& mat2);
 
 // Compute the transpose of a matrix.
 Matrixf transpose(Matrixf const& mat) ;

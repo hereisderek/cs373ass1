@@ -32,9 +32,14 @@ Matrixf multiply(Matrixf const& mat, float scalar) {
 
 	/** implement matrix/vector multiplication ********************/
 
-	Matrixf result(1, 1);
-
-	return result;
+	Matrixf ret(mat.nrows(), mat.ncols());
+	for (unsigned int row = 0; row < mat.nrows(); ++row){
+		for (unsigned int col = 0; col < mat.ncols(); ++col){
+			//ret(row, col) *= scalar;
+			ret(row, col) = mat(row, col) * scalar;
+		}
+	}
+	return ret;
 }
 
 Matrixf multiply(float scalar, Matrixf const& mat) {
@@ -53,8 +58,10 @@ float dot(Matrixf const& vec1, Matrixf const& vec2) {
 
 	/** implement dot product *************************************/
 
-	float ret = -1;
-
+	float ret = 0;
+	for (int i = 0; i < vec1.nrows(); ++i){
+		ret += vec1(i, 0) * vec2(i, 0);
+	}
 	return ret;
 }
 
@@ -99,6 +106,22 @@ Matrixf add(Matrixf const& mat1, Matrixf const& mat2) {
 	}
 
 	return result;
+}
+
+Matrixf subtract(Matrixf const& mat1, Matrixf const& mat2){
+	return add(mat1, multiply(mat2, -1));
+}
+
+Matrixf normalize(Matrixf const& vector){
+	// error check
+	if (!vector.isVector()) {
+		throw std::runtime_error("Unable to normalize: not a vector.");
+	}
+	if (length(vector) == 0)
+	{
+		throw std::runtime_error("Unable to normalize null vector.");
+	}
+	return multiply(vector, 1 / length(vector));
 }
 
 Matrixf transpose(Matrixf const& mat) {

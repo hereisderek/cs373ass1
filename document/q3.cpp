@@ -57,10 +57,17 @@ int main(int argumentCount, char **arguments)
     Matrixf point1 = GetMatrixRow(matrix, 0);
     Matrixf point2 = GetMatrixRow(matrix, 1);
     Matrixf point3 = GetMatrixRow(matrix, 2);
-
+	
     Matrixf normal(3,1);
     // TODO: Calculate normal values and add them to the normal vector 
-    
+	Matrixf edge12 = add(point2, multiply(point1, -1));
+	//point1.printMatrix();
+	//point2.printMatrix();
+	//edge12.printMatrix();
+	Matrixf edge23 = add(point3, multiply(point2, -1));
+	// TODO: Make  sure  to  provide  the  right  direction  for  the  normal  as  exemplified  in  lecture  3 slide 7.
+	normal = normalize(cross(edge12, edge23));
+	//Matrixf edge13 = subtract(point3, multiply(point1, 1));
     cout << transpose(normal);
   }
   catch(runtime_error error) 
