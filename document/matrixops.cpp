@@ -5,7 +5,6 @@
 #include <cmath>
 
 Matrixf multiply(Matrixf const& left, Matrixf const& right) {
-	//printf("left.ncols() != right.nrows(): " + (left.ncols() != right.nrows()));
 	// error check
 	if (left.ncols() != right.nrows()) {
 		throw std::runtime_error("Unable to multiply: matrix dimensions not agree.");
@@ -24,8 +23,18 @@ Matrixf multiply(Matrixf const& left, Matrixf const& right) {
 			ret(row, col) = sum;
 		}
 	}
-
+	//for (int i = 0; i < vec1.nrows(); ++i){
+	//	ret += vec1(i, 0) * vec2(i, 0);
+	//}
+	//for (unsigned int row = 0; row < left.nrows(); ++row){
+	//	for (unsigned int col = 0; col < left.ncols(); ++col){
+	//		float sum = 0;
+	//		ret(row, col) = dot(GetMatrixRow(left, row), GetMatrixRow(right, col));
+	//	}
+	//}
 	return ret;
+
+
 }
 
 Matrixf multiply(Matrixf const& mat, float scalar) {
@@ -35,8 +44,6 @@ Matrixf multiply(Matrixf const& mat, float scalar) {
 	Matrixf ret(mat.nrows(), mat.ncols());
 	for (unsigned int row = 0; row < mat.nrows(); ++row){
 		for (unsigned int col = 0; col < mat.ncols(); ++col){
-			//ret(row, col) *= scalar;
-			//TODO: double check here
 			ret(row, col) = (mat(row, col) == 0 ? 0 : mat(row, col) * scalar);
 		}
 	}

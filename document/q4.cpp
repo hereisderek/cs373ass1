@@ -18,11 +18,17 @@
 // 7 8 9
 // 10 11 12
 // 13 14 15
+//
+//
+//
+//
+//
 //-------------------------------------------------------------------
 
 #include <fstream>
 #include <iostream>
 #include <stdexcept>
+#include <vector>
 using namespace std;
 
 #include "matrixf.h"
@@ -39,7 +45,9 @@ const int FAILURE = 1;
 //-------------------------------------------------------------------
 Matrixf ReadFile(string fileName);
 Matrixf GetMatrixRow(Matrixf & matrix, int rowNumber);
-
+vector<Matrixf> reorder(Matrixf matrix);
+vector<Matrixf> reorder(vector<Matrixf> original);
+void swapVector(vector<Matrixf> v, int pos1, int pos2);
 //-------------------------------------------------------------------
 // Main application entry point
 //-------------------------------------------------------------------
@@ -58,6 +66,13 @@ int main(int argumentCount, char **arguments)
 
     Matrixf matrix = ReadFile(arguments[1]);
 
+	vector<Matrixf> vertices(5, Matrixf(1, 1));
+	for (int row = 0; row < matrix.nrows(); row++)
+	{
+		Matrixf vertex = GetMatrixRow(matrix, row);
+		vertices.at(row) = vertex;
+	}
+	vertices = reorder(vertices);
     Matrixf normal(3,1);
     
     // TODO: Calculate the robust normal here!
@@ -82,11 +97,64 @@ int main(int argumentCount, char **arguments)
 // Helper Methods
 //-------------------------------------------------------------------
 
+//Matrixf reOrder(Matrixf const matrixs[]){
+//	Matrixf newMatrixs()[5];
+//	return newMatrixs;
+//}
 /**
  * Read the data file that we have been given
  * @param fileName The name of the file that we are reading
  * @return The matrix that we read from the file
  */
+vector<Matrixf> reorder(Matrixf matrix){
+	vector<Matrixf> vertices(matrix.nrows(), Matrixf(1, 1));
+	for (int row = 0; row < matrix.nrows(); row++)
+	{
+		Matrixf vertex = GetMatrixRow(matrix, row);
+		vertices.at(row) = vertex;
+	}
+	return reorder(vertices);
+}
+vector<Matrixf> reorder(vector<Matrixf> originalVertices){
+	int size = originalVertices.size();
+	vector<Matrixf> newVertices(size, Matrixf(3, 1));
+	vector<Matrixf> centroidToVertex(size, Matrixf(3, 1));
+
+	// compute centroid
+	Matrixf centroid(3, 1);
+	float x = 0, y = 0, z = 0;
+	for each (Matrixf mat in originalVertices)
+	{
+		x += mat.get(0, 0);
+		y += mat.get(1, 0);
+		z += mat.get(2, 0);
+	}
+	centroid(0, 0) = (x / size);
+	centroid(1, 0) = (y / size);
+	centroid(2, 0) = (z / size);
+	
+	// compute centroidToVertex
+	for (int i = 0; i < size; ++i){
+		centroidToVertex.at(i) = subtract(originalVertices.at(i), centroid);
+	}
+	//centroidToVertex.at(0).printMatrix();
+	//centroidToVertex.at(1).printMatrix();
+	////swapVector(centroidToVertex, 0, 1);
+	//swap(centroidToVertex[0], centroidToVertex[1]);
+	//centroidToVertex.at(0).printMatrix();
+	//centroidToVertex.at(1).printMatrix();
+
+	// start point
+	newVertices.at(0) = originalVertices.at(0);
+	return newVertices;
+}
+
+void swapVector(vector<Matrixf> v, int pos1, int pos2){
+	//Matrixf *mat = &v.at(pos1);
+	//v.at(pos1) = v.at(pos2);
+	//v.at(pos2) = *mat;
+	swap(v[pos1], v[pos2]);
+}
 Matrixf ReadFile(string fileName) 
 {
   ifstream file; file.open(fileName.c_str());
