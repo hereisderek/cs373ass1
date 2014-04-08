@@ -57,10 +57,8 @@ int main(int argumentCount, char **arguments)
     Matrixf matrix = ReadFile(arguments[1]);
     Matrixf a = GetMatrixRow(matrix, 0);
     Matrixf b = GetMatrixRow(matrix, 1);
-	//Matrixf myMatrix(2, 3), myMatrix2(3, 2);
-	//myMatrix(1, 1) = 1; myMatrix(1, 2) = 2; myMatrix(1, 3) = 3; myMatrix(2, 1) = 4; myMatrix(2, 2) = 5; myMatrix(2, 3) = 6;
-	//multiply(myMatrix, transpose(myMatrix)).printMatrix();
-
+	a.printMatrix();
+	cout << tan(a, b);
     // TODO: Add your Height and Area logic here!
 	Matrixf crossResult = cross(a, b);
 	//crossResult.printMatrix();

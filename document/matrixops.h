@@ -30,5 +30,6 @@ Matrixf transpose(Matrixf const& mat) ;
 // Computes the length (L2 norm) of a vector.
 float length(Matrixf const& v) ;
 
+float tan(Matrixf const& vec1, Matrixf const& vec2);
 #endif // MATRIXOPS_H__
 

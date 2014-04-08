@@ -131,6 +131,22 @@ Matrixf normalize(Matrixf const& vector){
 	}
 	return multiply(vector, 1 / length(vector));
 }
+float tan(Matrixf const& vec1, Matrixf const& vec2) {
+
+	// error check
+	if (!vec1.isVector() || !vec2.isVector()) {
+		throw std::runtime_error("Unable to do dot product: not column vectors.");
+	}
+	if (vec1.nrows() != 3 || vec2.nrows() != 3) {
+		throw std::runtime_error("Unable to do cross product: vector lengths not 3.");
+	}
+
+	float ret;
+
+	ret = (length(cross(vec1, vec2)) / dot(vec1, vec2));
+	
+	return ret;
+}
 
 Matrixf transpose(Matrixf const& mat) {
 	Matrixf result(mat.ncols(), mat.nrows());
