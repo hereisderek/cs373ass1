@@ -86,13 +86,9 @@ Matrixf cross(Matrixf const& vec1, Matrixf const& vec2) {
 	/** implement cross product ***********************************/
 
 	Matrixf ret(3, 1);
-	ret(0, 0) = vec1(1, 0) * vec2(2, 0) - vec1(2, 0) * vec2(1, 0);
-	ret(1, 0) = vec1(2, 0) * vec2(0, 0) - vec1(0, 0) * vec2(2, 0);
-	ret(2, 0) = vec1(0, 0) * vec2(1, 0) - vec1(1, 0) * vec2(0, 0);
-
-	//vec1.printMatrix(); vec2.printMatrix();
-	//printf( "0%", (vec1(2, 1) * vec2(3, 1) - vec1(3, 1) * vec2(2, 1)));
-	//ret.printMatrix();
+	ret.set(0, 0, vec1.get(1, 0) * vec2.get(2, 0) - vec1.get(2, 0) * vec2.get(1, 0));
+	ret.set(1, 0, vec1.get(2, 0) * vec2.get(0, 0) - vec1.get(0, 0) * vec2.get(2, 0));
+	ret.set(2, 0, vec1.get(0, 0) * vec2.get(1, 0) - vec1.get(1, 0) * vec2.get(0, 0));
 	return ret;
 }
 

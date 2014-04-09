@@ -2,7 +2,7 @@
 #define MATRIXF_H__
 
 #include <iosfwd>
-
+#include <string>
 class Matrixf {
 
 public:

@@ -1,6 +1,7 @@
 #include "matrixf.h"
 
 #include <iostream>
+#include "matrixops.h"
 using namespace std;
 
 Matrixf::Matrixf(unsigned int rows, unsigned int cols) {
@@ -55,7 +56,21 @@ float Matrixf::get(unsigned int row, unsigned int col) const {
 	return data_[row * cols_ + col];
 }
 
+void Matrixf::set(unsigned int row, unsigned int col, float val) {
+#ifndef NDEBUG
+	if (row >= rows_ || col >= cols_) {
+		throw std::runtime_error("Matrix index out of bounds.");
+	}
+#endif
+	data_[row * cols_ + col] = (val == 0 ? 0 : val);
+}
+
 void Matrixf::printMatrix() const {
+	/*if (rows_ > cols_){
+	cout << "T:" << endl;
+	Matrixf m(1, 1);
+	return transpose(__super);
+	}*/
 	for (int row = 0; row<rows_; row++)
 	{
 		for (int column = 0; column<cols_; column++)
@@ -66,15 +81,6 @@ void Matrixf::printMatrix() const {
 		cout << endl;
 	}
 	cout << endl;
-}
-
-void Matrixf::set(unsigned int row, unsigned int col, float val) {
-#ifndef NDEBUG
-	if (row >= rows_ || col >= cols_) {
-		throw std::runtime_error("Matrix index out of bounds.");
-	}
-#endif
-	data_[row * cols_ + col] = val;
 }
 
 float& Matrixf::operator()(unsigned int row, unsigned int col) {

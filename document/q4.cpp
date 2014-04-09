@@ -29,6 +29,9 @@
 #include <iostream>
 #include <stdexcept>
 #include <vector>
+#include <string>
+#define _USE_MATH_DEFINES
+#include <math.h>
 using namespace std;
 
 #include "matrixf.h"
@@ -48,6 +51,8 @@ Matrixf GetMatrixRow(Matrixf & matrix, int rowNumber);
 vector<Matrixf> reorder(Matrixf matrix);
 vector<Matrixf> reorder(vector<Matrixf> original);
 void swapVector(vector<Matrixf> v, int pos1, int pos2);
+float GetSignedAngleBetweenVectors(Matrixf const& source, Matrixf const& dest, Matrixf const& destLeft);
+float GetSignedAngleBetweenVectors(Matrixf const& source, Matrixf const& dest);
 //-------------------------------------------------------------------
 // Main application entry point
 //-------------------------------------------------------------------
@@ -138,26 +143,32 @@ vector<Matrixf> reorder(vector<Matrixf> originalVertices){
 	for (int i = 0; i < size; ++i){
 		centroidToVertex.at(i) = subtract(originalVertices.at(i), centroid);
 	}
+	
+	for (int i = 1; i < size; ++i){
+		centroidToVertex.at(i).printMatrix();
+		cout << "angle: " << GetSignedAngleBetweenVectors(originalVertices.at(0), centroidToVertex.at(i)) * 180 / M_PI << endl;
+	}
 	//centroidToVertex.at(0).printMatrix();
 	//centroidToVertex.at(1).printMatrix();
 	////swapVector(centroidToVertex, 0, 1);
 	//swap(centroidToVertex[0], centroidToVertex[1]);
 	//centroidToVertex.at(0).printMatrix();
 	//centroidToVertex.at(1).printMatrix();
-
+  
 	// start point
 	newVertices.at(0) = originalVertices.at(0);
 	return newVertices;
 }
 
-float GetSignedAngleBetweenVectors(Matrixf const& source, Matrixf const& dest, Matrixf const& destRight){
-	if (length(source) != 1 || length(dest) != 1 || length(destRight) != 1)
+float GetSignedAngleBetweenVectors(Matrixf const& source, Matrixf const& dest, Matrixf const& destLeft){
+	/*if (length(source) != 1.0f || length(dest) != 1.0f || length(destLeft) != 1.0f)
 	{
+		cout << "error: length not 1: source: " << length(source) << " dest: " << length(dest) << " destLeft: " << length(destLeft) << endl;
 		throw std::runtime_error("vector not normalized.");
-	}
+	}*/
 	
 	float forwardDot = dot(source, dest);
-	float rightDot = dot(source, destRight);
+	float leftDot = dot(source, destLeft);
 
 	// Make sure we stay in range no matter what, so Acos
 	// doesn't fail later
@@ -172,18 +183,32 @@ float GetSignedAngleBetweenVectors(Matrixf const& source, Matrixf const& dest, M
 
 	float angleBetween = acos(forwardDot);
 
-	if (rightDot < 0.0f)
+	if (leftDot > 0.0f)
 	{
-		angleBetween *= -1.0f;
+		//angleBetween *= -1.0f ;
+		//angleBetween = 2 * M_PI - angleBetween;
 	}
-
 	return angleBetween;
 }
-float GetSignedAngleBetweenVectors(Matrixf const& source, Matrixf const& dest){
-	Matrixf destRight(dest.nrows(), dest.ncols());
-	//TODO: find destRight
 
-	return GetSignedAngleBetweenVectors(source, dest, destRight);
+float GetSignedAngleBetweenVectors(Matrixf const& source, Matrixf const& dest){
+	//http://stackoverflow.com/questions/3982877/opengl-rotation-of-an-object-around-a-line
+	Matrixf destLeft(dest.nrows(), dest.ncols());
+	//TODO: find destLeft
+	Matrixf axis(dest.nrows(), 1);
+	axis = cross(source, dest);
+	if (dot(source, dest) < 0) axis = multiply(axis, -1);
+	//normal.printMatrix();
+	destLeft = cross(axis, dest);
+	cout << "dest: " << endl;
+	dest.printMatrix();
+	cout << "destleft: " << endl;
+	destLeft.printMatrix();
+	cout << "normal: " << endl;
+	axis.printMatrix();
+	destLeft = normalize(destLeft);
+	//destLeft.printMatrix();
+	return GetSignedAngleBetweenVectors(normalize(source), normalize(dest), destLeft);
 }
 void swapVector(vector<Matrixf> v, int pos1, int pos2){
 	//Matrixf *mat = &v.at(pos1);
