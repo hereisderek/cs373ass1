@@ -143,7 +143,7 @@ float tan(Matrixf const& vec1, Matrixf const& vec2) {
 
 	float ret;
 
-	ret = (length(cross(vec1, vec2)) / dot(vec1, vec2));
+	ret = (length(cross(vec1, vec2)) / dot(vec1, vec2) );
 	
 	return ret;
 }

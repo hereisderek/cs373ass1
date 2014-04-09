@@ -116,7 +116,8 @@ vector<Matrixf> reorder(Matrixf matrix){
 	return reorder(vertices);
 }
 vector<Matrixf> reorder(vector<Matrixf> originalVertices){
-	int size = originalVertices.size();
+	const int size = originalVertices.size();
+	int correctOrder[5];
 	vector<Matrixf> newVertices(size, Matrixf(3, 1));
 	vector<Matrixf> centroidToVertex(size, Matrixf(3, 1));
 
@@ -149,6 +150,41 @@ vector<Matrixf> reorder(vector<Matrixf> originalVertices){
 	return newVertices;
 }
 
+float GetSignedAngleBetweenVectors(Matrixf const& source, Matrixf const& dest, Matrixf const& destRight){
+	if (length(source) != 1 || length(dest) != 1 || length(destRight) != 1)
+	{
+		throw std::runtime_error("vector not normalized.");
+	}
+	
+	float forwardDot = dot(source, dest);
+	float rightDot = dot(source, destRight);
+
+	// Make sure we stay in range no matter what, so Acos
+	// doesn't fail later
+	if (forwardDot < -1.0f)
+	{
+		forwardDot = -1.0f;
+	}
+	else if (forwardDot > 1.0f)
+	{
+		forwardDot = 1.0f;
+	}
+
+	float angleBetween = acos(forwardDot);
+
+	if (rightDot < 0.0f)
+	{
+		angleBetween *= -1.0f;
+	}
+
+	return angleBetween;
+}
+float GetSignedAngleBetweenVectors(Matrixf const& source, Matrixf const& dest){
+	Matrixf destRight(dest.nrows(), dest.ncols());
+	//TODO: find destRight
+
+	return GetSignedAngleBetweenVectors(source, dest, destRight);
+}
 void swapVector(vector<Matrixf> v, int pos1, int pos2){
 	//Matrixf *mat = &v.at(pos1);
 	//v.at(pos1) = v.at(pos2);
