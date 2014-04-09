@@ -186,7 +186,7 @@ float GetSignedAngleBetweenVectors(Matrixf const& source, Matrixf const& dest, M
 	if (leftDot > 0.0f)
 	{
 		//angleBetween *= -1.0f ;
-		//angleBetween = 2 * M_PI - angleBetween;
+		angleBetween = 2 * M_PI - angleBetween;
 	}
 	return angleBetween;
 }
@@ -197,7 +197,17 @@ float GetSignedAngleBetweenVectors(Matrixf const& source, Matrixf const& dest){
 	//TODO: find destLeft
 	Matrixf axis(dest.nrows(), 1);
 	axis = cross(source, dest);
-	if (dot(source, dest) < 0) axis = multiply(axis, -1);
+	//if (axis.get(0, 0) == 0) axis = multiply(axis, -1);
+
+	int x = axis.get(0, 0), y = axis.get(1, 0), z = axis.get(2, 0);
+	if (x != 0 ){
+		if (x < 0) axis = multiply(axis, -1); 
+	}
+	else if (y != 0){
+		if (y < 0) axis = multiply(axis, -1);
+	}
+	else if (z < 0) axis = multiply(axis, -1);
+	//if (!(x != 0 && x > 0) || (y != 0 && y > 0) || (z != 0 && z > 0)) axis = multiply(axis, -1);
 	//normal.printMatrix();
 	destLeft = cross(axis, dest);
 	cout << "dest: " << endl;
