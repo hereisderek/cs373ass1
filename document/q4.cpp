@@ -124,6 +124,9 @@ vector<Matrixf> reorder(vector<Matrixf> originalVertices){
 	const int size = originalVertices.size();
 	int correctOrder[5];
 	vector<Matrixf> newVertices(size, Matrixf(3, 1));
+	for (int i = 0; i < size; i++){
+		newVertices.at(i) = originalVertices.at(i);
+	}
 	vector<Matrixf> centroidToVertex(size, Matrixf(3, 1));
 
 	// compute centroid
@@ -143,11 +146,33 @@ vector<Matrixf> reorder(vector<Matrixf> originalVertices){
 	for (int i = 0; i < size; ++i){
 		centroidToVertex.at(i) = subtract(originalVertices.at(i), centroid);
 	}
-	
+	int angles[5]; 
+	angles[0] = 0;
+	// read angles
 	for (int i = 1; i < size; ++i){
 		centroidToVertex.at(i).printMatrix();
-		cout << "angle: " << GetSignedAngleBetweenVectors(originalVertices.at(0), centroidToVertex.at(i)) * 180 / M_PI << endl;
+		angles[i] = GetSignedAngleBetweenVectors(originalVertices.at(0), centroidToVertex.at(i)) * 180 / M_PI;
+		cout << "angle: " << angles[i] << endl;
 	}
+	newVertices.at(0) = originalVertices.at(0);
+
+	// sort
+	int minAngle, lastMinAngle = 0, angleIndex = 1;
+	for (int i = 1; i < size; i++){
+		for (int j = i; j < size; j++){
+			if (angles[j] < angles[j - 1]) {
+				int temp = angles[j];
+				angles[j] = angles[j - 1];
+				angles[j - 1] = temp;
+				swap(newVertices.at(j), newVertices.at(j - 1));
+			}
+		}
+	}
+	for each (int var in angles)
+	{
+		cout << var << " ";
+	}
+	cout << endl;
 	//centroidToVertex.at(0).printMatrix();
 	//centroidToVertex.at(1).printMatrix();
 	////swapVector(centroidToVertex, 0, 1);
@@ -197,8 +222,13 @@ float GetSignedAngleBetweenVectors(Matrixf const& source, Matrixf const& dest){
 	//TODO: find destLeft
 	Matrixf axis(dest.nrows(), 1);
 	axis = cross(source, dest);
+	// detect parallel
+	if (length(axis) == 0){
+		return (dot(dest, source) == 1 ? 0 : M_PI / 2);
+	}
 	//if (axis.get(0, 0) == 0) axis = multiply(axis, -1);
 
+	// parelle 
 	int x = axis.get(0, 0), y = axis.get(1, 0), z = axis.get(2, 0);
 	if (x != 0 ){
 		if (x < 0) axis = multiply(axis, -1); 
