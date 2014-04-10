@@ -31,6 +31,11 @@
 #include <vector>
 #include <string>
 #define _USE_MATH_DEFINES
+
+//#define NDEBUG
+#ifndef NDEBUG
+#define _DEBUG_
+#endif
 #include <math.h>
 using namespace std;
 
@@ -53,6 +58,7 @@ vector<Matrixf> reorder(vector<Matrixf> original);
 void swapVector(vector<Matrixf> v, int pos1, int pos2);
 float GetSignedAngleBetweenVectors(Matrixf const& source, Matrixf const& dest, Matrixf const& destLeft);
 float GetSignedAngleBetweenVectors(Matrixf const& source, Matrixf const& dest);
+Matrixf robustNomal(vector<Matrixf> const& vec);
 //-------------------------------------------------------------------
 // Main application entry point
 //-------------------------------------------------------------------
@@ -78,8 +84,17 @@ int main(int argumentCount, char **arguments)
 		vertices.at(row) = vertex;
 	}
 	vertices = reorder(vertices);
+
     Matrixf normal(3,1);
-    
+	normal = robustNomal(vertices);
+#ifndef NDEBUG
+	cout << "sorted: " << endl;
+	for each (Matrixf var in vertices)
+	{
+		transpose(var).printMatrix();
+	}
+	normal.printMatrix();
+#endif
     // TODO: Calculate the robust normal here!
     // NOTE: How do I get the vertices out of the matrix? See below!
     // for (int row=0; row<matrix.nrows(); row++) 
@@ -111,6 +126,18 @@ int main(int argumentCount, char **arguments)
  * @param fileName The name of the file that we are reading
  * @return The matrix that we read from the file
  */
+Matrixf robustNomal(vector<Matrixf> const& vec ){
+	//TODO:
+	int size = vec.size();
+	Matrixf normal(vec.at(0).nrows(), 1);
+	for (int i = 0; i < size; i++){
+		normal = add(normal, cross(
+			subtract(vec.at((i - 1 + size) % size), vec.at(i)),
+			subtract(vec.at((i + 1 + size) % size), vec.at(i))
+			));
+	} 
+	return normalize(normal);
+}
 vector<Matrixf> reorder(Matrixf matrix){
 	vector<Matrixf> vertices(matrix.nrows(), Matrixf(1, 1));
 	for (int row = 0; row < matrix.nrows(); row++)
@@ -150,29 +177,31 @@ vector<Matrixf> reorder(vector<Matrixf> originalVertices){
 	angles[0] = 0;
 	// read angles
 	for (int i = 1; i < size; ++i){
-		centroidToVertex.at(i).printMatrix();
 		angles[i] = GetSignedAngleBetweenVectors(originalVertices.at(0), centroidToVertex.at(i)) * 180 / M_PI;
+#ifndef NDEBUG
 		cout << "angle: " << angles[i] << endl;
+#endif
 	}
 	newVertices.at(0) = originalVertices.at(0);
 
 	// sort
-	int minAngle, lastMinAngle = 0, angleIndex = 1;
 	for (int i = 1; i < size; i++){
 		for (int j = i; j < size; j++){
-			if (angles[j] < angles[j - 1]) {
-				int temp = angles[j];
-				angles[j] = angles[j - 1];
-				angles[j - 1] = temp;
-				swap(newVertices.at(j), newVertices.at(j - 1));
+			if (angles[i] > angles[j]) {
+				int temp = angles[i];
+				angles[i] = angles[j];
+				angles[j] = temp;
+				swap(newVertices.at(i), newVertices.at(j));
 			}
 		}
 	}
+#ifndef NDEBUG
 	for each (int var in angles)
 	{
 		cout << var << " ";
 	}
 	cout << endl;
+#endif
 	//centroidToVertex.at(0).printMatrix();
 	//centroidToVertex.at(1).printMatrix();
 	////swapVector(centroidToVertex, 0, 1);
@@ -240,12 +269,14 @@ float GetSignedAngleBetweenVectors(Matrixf const& source, Matrixf const& dest){
 	//if (!(x != 0 && x > 0) || (y != 0 && y > 0) || (z != 0 && z > 0)) axis = multiply(axis, -1);
 	//normal.printMatrix();
 	destLeft = cross(axis, dest);
+#ifndef NDEBUG
 	cout << "dest: " << endl;
 	dest.printMatrix();
 	cout << "destleft: " << endl;
 	destLeft.printMatrix();
 	cout << "normal: " << endl;
 	axis.printMatrix();
+#endif
 	destLeft = normalize(destLeft);
 	//destLeft.printMatrix();
 	return GetSignedAngleBetweenVectors(normalize(source), normalize(dest), destLeft);
