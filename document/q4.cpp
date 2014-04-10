@@ -224,7 +224,7 @@ float GetSignedAngleBetweenVectors(Matrixf const& source, Matrixf const& dest){
 	axis = cross(source, dest);
 	// detect parallel
 	if (length(axis) == 0){
-		return (dot(dest, source) == 1 ? 0 : M_PI / 2);
+		return (dot(dest, source) == 1 ? 0 : M_PI );
 	}
 	//if (axis.get(0, 0) == 0) axis = multiply(axis, -1);
 
@@ -254,7 +254,7 @@ void swapVector(vector<Matrixf> v, int pos1, int pos2){
 	//Matrixf *mat = &v.at(pos1);
 	//v.at(pos1) = v.at(pos2);
 	//v.at(pos2) = *mat;
-	swap(v[pos1], v[pos2]);
+	//swap(v[pos1], v[pos2]);
 }
 Matrixf ReadFile(string fileName) 
 {
