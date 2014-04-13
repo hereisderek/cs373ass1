@@ -20,7 +20,7 @@
 // 13 14 15
 //
 //
-//
+// TODO: handle more than 2(3) points sharing a line (including cendroid)
 //
 //
 //-------------------------------------------------------------------
@@ -94,6 +94,7 @@ int main(int argumentCount, char **arguments)
 		transpose(var).printMatrix();
 	}
 	normal.printMatrix();
+	getchar();
 #endif
     // TODO: Calculate the robust normal here!
     // NOTE: How do I get the vertices out of the matrix? See below!
@@ -126,16 +127,37 @@ int main(int argumentCount, char **arguments)
  * @param fileName The name of the file that we are reading
  * @return The matrix that we read from the file
  */
-Matrixf robustNomal(vector<Matrixf> const& vec ){
-	//TODO:
+Matrixf robustNomal(vector<Matrixf> const& vec){
+
+#ifndef NDEBUG 
+	cout << "computing vectors" << endl;
+	for each (Matrixf var in vec)
+	{
+		transpose(var).printMatrix();
+	}
+#endif
 	int size = vec.size();
 	Matrixf normal(vec.at(0).nrows(), 1);
 	for (int i = 0; i < size; i++){
-		normal = add(normal, cross(
-			subtract(vec.at((i - 1 + size) % size), vec.at(i)),
+#ifndef NDEBUG 
+		cout << "crossing: " << (i + 1 + size) % size << " " << i << " " << (i - 1 + size) % size << endl;
+		subtract(vec.at((i + 1 + size) % size), vec.at(i)).printMatrix();
+		subtract(vec.at((i - 1 + size) % size), vec.at(i)).printMatrix();
+		vec.at((i) % size).printMatrix();
+#endif
+		Matrixf newMat(3, 1);
+		newMat = cross(
+			//subtract(vec.at((i - 1 + size) % size), vec.at(i)),
 			subtract(vec.at((i + 1 + size) % size), vec.at(i))
-			));
-	} 
+			, subtract(vec.at((i - 1 + size) % size), vec.at(i))
+			);
+		cout << "new normal: " << endl;
+		newMat.printMatrix();
+		normal = add(normal, newMat);
+
+	}
+	cout << "normal: " << endl;
+	//normal.printMatrix();
 	return normalize(normal);
 }
 vector<Matrixf> reorder(Matrixf matrix){

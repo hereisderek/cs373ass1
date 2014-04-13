@@ -17,6 +17,7 @@
 #include <fstream>
 #include <iostream>
 #include <stdexcept>
+#include <vector>
 //#include "stdafx.h"
 using namespace std;
 
@@ -40,6 +41,7 @@ float sin(Matrixf const& v1, Matrixf const& v2);
 float cos(Matrixf const& v1, Matrixf const& v2);
 void show(Matrixf const& a, Matrixf const& b);
 void show(Matrixf const& a, Matrixf const& b, int no);
+Matrixf robustNomal(vector<Matrixf> const& vec);
 //-------------------------------------------------------------------
 // Main application entry point
 //-------------------------------------------------------------------
@@ -62,68 +64,76 @@ int main(int argumentCount, char **arguments)
 		Matrixf b(3, 1);
 		Matrixf c(3, 1);
 		Matrixf d(3, 1);
+		Matrixf e(3, 1);
 
-		// 1
-		a(0, 0) = 1;
-		a(1, 0) = 0;
-		a(2, 0) = 0;
+		//// 1
+		//a(0, 0) = 1;
+		//a(1, 0) = 0;
+		//a(2, 0) = 0;
 
-		b(0, 0) = 1;
-		b(1, 0) = 1;
-		b(2, 0) = 0;
-		show(a, b, 1);
-		// 2
-		a(0, 0) = 2;
-		a(1, 0) = 0;
-		a(2, 0) = 0;
+		//b(0, 0) = 1;
+		//b(1, 0) = 1;
+		//b(2, 0) = 0;
+		//// 2
+		//a(0, 0) = 2;
+		//a(1, 0) = 0;
+		//a(2, 0) = 0;
 
-		b(0, 0) = 2;
-		b(1, 0) = 1;
-		b(2, 0) = 0;
-		show(a, b, 2);
-		//3
-		a(0, 0) = 1;
-		a(1, 0) = 0;
-		a(2, 0) = 0;
+		//b(0, 0) = 2;
+		//b(1, 0) = 1;
+		//b(2, 0) = 0;
+		//show(a, b, 2);
+		////3
+		//a(0, 0) = 1;
+		//a(1, 0) = 0;
+		//a(2, 0) = 0;
 
-		b(0, 0) = -1;
-		b(1, 0) = 1;
-		b(2, 0) = 0;
-		show(a, b, 3);
-		//4
-		a(0, 0) = 1;
-		a(1, 0) = 0;
-		a(2, 0) = 0;
+		//b(0, 0) = -1;
+		//b(1, 0) = 1;
+		//b(2, 0) = 0;
+		//show(a, b, 3);
+		////4
+		//a(0, 0) = 1;
+		//a(1, 0) = 0;
+		//a(2, 0) = 0;
 
-		b(0, 0) = -1;
-		b(1, 0) = -1;
-		b(2, 0) = 0;
-		show(a, b, 4);
+		//b(0, 0) = -1;
+		//b(1, 0) = -1;
+		//b(2, 0) = 0;
+		//show(a, b, 4);
 
 		//5
 		a(0, 0) = 1;
 		a(1, 0) = 0;
 		a(2, 0) = 0;
 
-		b(0, 0) = 1;
-		b(1, 0) = -1;
-		b(2, 0) = 0;
-		show(a, b, 5);
+		b(0, 0) = 2;
+		b(1, 0) = 0;
+		b(2, 0) = -1;
 
+		c(0, 0) = 3;
+		c(1, 0) = -1;
+		c(2, 0) = -2;
 
-		c(0, 0) = 1;
-		c(1, 0) = 2;
-		c(2, 0) = 2;
+		d(0, 0) = 0;
+		d(1, 0) = 1;
+		d(2, 0) = 0;
 
-		d(0, 0) = 1;
-		d(1, 0) = 2;
-		d(2, 0) = 2;
+		e(0, 0) = 0;
+		e(1, 0) = 0;
+		e(2, 0) = 1;
 
+		vector<Matrixf> v(5, Matrixf(3, 1));
+		v.at(0) = (a); v.at(1) = (b); v.at(2) = (c);
+		v.at(3) = d; v.at(4) = e;
+		//v.push_back(b); v.push_back(c);
+
+		robustNomal(v).printMatrix();
 
 
 		a.printMatrix();
 		cout << tan(a, b);
-	std:getchar();
+		getchar();
 
 	}
 	catch (runtime_error error)
@@ -191,4 +201,36 @@ Matrixf CreateSolutionMatrix(float height, float area)
 void WriteSolution(Matrixf & solution)
 {
 	cout << solution;
+}
+
+Matrixf robustNomal(vector<Matrixf> const& vec){
+
+#ifndef NDEBUG 
+	cout << "computing vectors" << endl;
+	for each (Matrixf var in vec)
+	{
+		transpose(var).printMatrix();
+	}
+#endif
+	int size = vec.size();
+	Matrixf normal(vec.at(0).nrows(), 1);
+	for (int i = 0; i < size; i++){
+		cout << "crossing: " << (i + 1 + size) % size << " " << i << " " << (i - 1 + size) % size << endl;
+		subtract(vec.at((i + 1 + size) % size), vec.at(i)).printMatrix();
+		subtract(vec.at((i - 1 + size) % size), vec.at(i)).printMatrix();
+		vec.at((i) % size).printMatrix();
+		Matrixf newMat(3, 1);
+		newMat = cross(
+			//subtract(vec.at((i - 1 + size) % size), vec.at(i)),
+			subtract(vec.at((i + 1 + size) % size), vec.at(i))
+			, subtract(vec.at((i - 1 + size) % size), vec.at(i))
+			);
+		cout << "new normal: " << endl;
+		newMat.printMatrix();
+		normal = add(normal,newMat);
+
+	}
+	cout << "normal: " << endl;
+	normal.printMatrix();
+	return normalize(normal);
 }

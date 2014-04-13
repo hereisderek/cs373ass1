@@ -63,11 +63,10 @@ int main(int argumentCount, char **arguments)
 	Matrixf edge12 = add(point2, multiply(point1, -1));
 	//point1.printMatrix();
 	//point2.printMatrix();
-	edge12.printMatrix();
 	//multiply(edge12, -1).printMatrix();
-	Matrixf edge23 = add(point3, multiply(point2, -1));
+	Matrixf edge13 = add(point3, multiply(point1, -1));
 	// TODO: Make  sure  to  provide  the  right  direction  for  the  normal  as  exemplified  in  lecture  3 slide 7.
-	normal = normalize(cross(edge12, edge23));
+	normal = normalize(cross(edge12, edge13));
 	//Matrixf edge13 = subtract(point3, multiply(point1, 1));
     cout << transpose(normal);
   }
