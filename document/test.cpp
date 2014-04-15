@@ -103,6 +103,15 @@ int main(int argumentCount, char **arguments)
 		//show(a, b, 4);
 
 		//5
+		a(0, 0) = -0.8;
+		a(1, 0) = 0;
+		a(2, 0) = -1.2;
+
+		b(0, 0) = 0.2;
+		b(1, 0) = 0;
+		b(2, 0) = -1.2;
+		cross(a, b).printMatrix();
+		getchar();
 		a(0, 0) = 1;
 		a(1, 0) = 0;
 		a(2, 0) = 0;
@@ -132,7 +141,6 @@ int main(int argumentCount, char **arguments)
 
 
 		a.printMatrix();
-		cout << tan(a, b);
 		getchar();
 
 	}
@@ -146,9 +154,6 @@ int main(int argumentCount, char **arguments)
 void show(Matrixf const& a, Matrixf const& b){
 	transpose(a).printMatrix();
 	transpose(b).printMatrix();
-	cout << "sin a^b: " << sin(a, b) << endl;
-	cout << "cos a^b: " << cos(a, b) << endl;
-	cout << "tan a^b: " << tan(a, b) << endl;
 	cout << " ======================== " << endl;
 }
 void show(Matrixf const& a, Matrixf const& b, int no){
